@@ -2,18 +2,58 @@ import Header from './Header/Header.jsx';
 import Main from './Main/Main.jsx';
 import Footer from './Footer/Footer.jsx';
 import PopupWithForm from './PopupWithForm/PopupWithForm.jsx';
+import PopupImage from './PopupImage/PopupImage.jsx';
+import { useState } from 'react';
 
 function App() {
 
-  function handleEditAvatarClick() {
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
+
+  const [isCardSelect, setCardSelect] = useState({})
+  const [isImagePopup, setIsImagePopup] = useState(false)
+
+
+  function closeAllPopups() {
+    setIsEditProfilePopupOpen(false)
+    setIsEditAvatarPopupOpen(false)
+    setIsAddPlacePopupOpen(false)
+    setIsImagePopup(false)
   }
+
+  function handleEditProfileClick() {
+    setIsEditProfilePopupOpen(true)
+  }
+
+  function handleEditAvatarClick() {
+    setIsEditAvatarPopupOpen(true)
+  }
+
+  function handleAddPlaceClick() {
+    setIsAddPlacePopupOpen(true)
+  }
+
+  function handleCardsClick(card) {
+    setCardSelect(card)
+    setIsImagePopup(true)
+    // setEvantListenerForDocument()
+
+  }
+
+  // function handleDelete() {
+  // }
+
   return (
     <div className="page__content">
       
       <Header/>
 
       <Main
-        onAvatar = {handleEditAvatarClick}
+        onEditProfile = {handleEditProfileClick}
+        onEditeAvatar = {handleEditAvatarClick}
+        onAddPlace = {handleAddPlaceClick}
+        onCardElement = {handleCardsClick}
       />
 
       <Footer/>
@@ -21,9 +61,10 @@ function App() {
       <PopupWithForm
         name='edite-profile'
         title='Редактировать профиль'
+        isOpen ={isEditProfilePopupOpen}
+        onClose = {closeAllPopups}
       >
-        <input
-          id="username-input"
+        <input id="username-input"
           type="text"
           className="popup__input popup__input_type_username"
           name="username"
@@ -45,9 +86,28 @@ function App() {
       </PopupWithForm>
 
       <PopupWithForm
+        name='edite-avatar'
+        title='Обновить аватар'
+        isOpen={isEditAvatarPopupOpen}
+        onClose = {closeAllPopups}
+      >
+        <input
+          id="image-input"
+          type="url"
+          className="popup__input popup__input_type_link"
+          name="image"
+          placeholder="Ссылка на картинку"
+          required=""
+        />
+        <span id="image-input-error" className="popup__input-error" />
+      </PopupWithForm>
+
+      <PopupWithForm
         name='add-card'
         title='Новое место'
         titleButton='Создать'
+        isOpen={isAddPlacePopupOpen}
+        onClose = {closeAllPopups}
       >
         <input
             id="title-input"
@@ -72,34 +132,17 @@ function App() {
       </PopupWithForm>
 
       <PopupWithForm
-        name='edite-avatar'
-        title='Обновить аватар'
-      >
-        <input
-          id="image-input"
-          type="url"
-          className="popup__input popup__input_type_link"
-          name="image"
-          placeholder="Ссылка на картинку"
-          required=""
-        />
-        <span id="image-input-error" className="popup__input-error" />
-      </PopupWithForm>
-
-      <PopupWithForm
       name='delete'
       title='Вы уверены?'
       titleButton='Да'
       />
 
-      {/*  Попап "Открыть фото"*/}
-      <div className="popup popup_open-images">
-        <div className="popup__container popup__container_open-image">
-          <button type="button" className="popup__button-close" />
-          <img className="popup__image-full" src="#" alt="#" />
-          <p className="popup__image-signature" />
-        </div>
-      </div>
+      <PopupImage 
+      card = {isCardSelect}
+      isOpen = {isImagePopup}
+      onClose = {closeAllPopups}
+      />
+      
     </div>
   );
 }
