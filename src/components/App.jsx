@@ -22,6 +22,8 @@ function App() {
 
   const [cards, setCards] = useState([])
 
+  const[isDeleteCards, setDeleteCards] = useState('')
+
   const setStateClosePopup = useCallback(() =>{
     setIsEditProfilePopupOpen(false)
     setIsEditAvatarPopupOpen(false)
@@ -42,34 +44,35 @@ function App() {
     document.removeEventListener('keydown', closePopupByEsc)
   },[setStateClosePopup])
 
-  function setEvantListenerForKyedown() {
+  function setEvantListenerForKeydown() {
     document.addEventListener('keydown', closePopupByEsc)
   }
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true)
-    setEvantListenerForKyedown()
+    setEvantListenerForKeydown()
   }
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true)
-    setEvantListenerForKyedown()
+    setEvantListenerForKeydown()
   }
 
   function handleAddPlaceClick() {
     setIsAddPlacePopupOpen(true)
-    setEvantListenerForKyedown()
+    setEvantListenerForKeydown()
   }
 
   function handleCardsClick(card) {
     setCardSelect(card)
     setIsImagePopup(true)
-    setEvantListenerForKyedown()
+    setEvantListenerForKeydown()
   }
 
-  function handleDeletePopup() {
+  function handleDeletePopup(cardId) {
+    setDeleteCards(cardId)
     setDeletePopupOpen(true)
-    setEvantListenerForKyedown()
+    setEvantListenerForKeydown()
   }
 
   useEffect(() => {
@@ -79,6 +82,18 @@ function App() {
         setCards(dataCard);
       });
   },[])
+
+  function handleCardDelete(evt) {
+    evt.preventDefault()
+    api.deleteCard(isDeleteCards)
+      .then(() => {
+        setCards(cards.filter(element => {
+          return element._id !== isDeleteCards
+        }))
+        closeAllPopups()
+      })
+      .catch ((err) => console.error(`Ошибка удаления карточки ${err}`))
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUsers}>
@@ -176,6 +191,7 @@ function App() {
           titleButton='Да'
           isOpen ={isDeletePopupOpen}
           onClose = {closeAllPopups}
+          onSubmit = {handleCardDelete}
         />
 
         <ImagePopup 
