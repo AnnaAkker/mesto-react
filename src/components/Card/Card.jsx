@@ -1,7 +1,7 @@
 export default function Card({ card, onCardElement }) {
     return (
         <div className="elements__card">
-            <button type="button" className="elements__trash-button" />
+             {card.myId === card.owner._id && <button type="button" className="elements__trash-button"/>}
             <img className="elements__image"
             src={card.link}
             alt={`Фотография ${card.name}`}
