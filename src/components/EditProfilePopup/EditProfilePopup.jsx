@@ -3,35 +3,42 @@ import PopupWithForm from "../PopupWithForm/PopupWithForm.jsx";
 
 export default function EditProfilePopup({ isOpen, onClose }) {
 
-    const { handleChange } = useFormValidation()
+    const { listValue, errorMessages, isValidInput, isValid, handleChange } = useFormValidation()
+
     return (
         <PopupWithForm
           name='edite-profile'
           title='Редактировать профиль'
           isOpen ={isOpen}
           onClose = {onClose}
+          isValid={isValid}
         >
-          <input id="username-input"
+          <input
+            id="username-input"
             type="text"
-            className="popup__input popup__input_type_username"
+            className={`popup__input popup__input_type_username ${isValidInput.username === undefined || isValidInput.username ? '' : 'popup__input_invalid'}`}
             name="username"
+            placeholder="Введите имя"
             minLength={2}
             maxLength={40}
             required=""
+            value={listValue.username ? listValue.username : ''}
             onChange={handleChange}
           />
-          <span id="username-input-error" className="popup__input-error" />
+          <span className="popup__input-error">{errorMessages.username}</span>
           <input
             id="subtitle-input"
             type="text"
-            className="popup__input popup__input_type_subtitle"
+            className={`popup__input popup__input_type_subtitle ${isValidInput.subtitle === undefined || isValidInput.subtitle ? '' : 'popup__input_invalid'}`}
             name="subtitle"
+            placeholder="Расскажите о себе"
             minLength={2}
             maxLength={200}
             required=""
+            value={listValue.subtitle ? listValue.subtitle : ''}
             onChange={handleChange}
           />
-          <span id="subtitle-input-error" className="popup__input-error" />
+          <span className="popup__input-error">{errorMessages.subtitle}</span>
         </PopupWithForm>
     )
 }

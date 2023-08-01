@@ -6,27 +6,29 @@ import { useState } from "react";
     const [isValid, setIsValid] = useState(false)
     const [isValidInput, setIsValidInput] = useState({})
 
+    console.log(isValidInput)
+
     function handleChange(evt) {
-        const name = evt.target.name
-        const value = evt.target.value
-        const validMessage = evt.target.validMessage
-        const valid = evt.target.validity.valid
-        const forms = evt.target.forms
-
+        const name = evt.target.name;
+        const value = evt.target.value;
+        const validMessage = evt.target.validMessage;
+        const valid = evt.target.validity.valid;
+        const form = evt.target.form;
+    
         setListValue((oldListValue) => {
-            return { ...oldListValue, [name]: value }
-        })
-
+          return { ...oldListValue, [name]: value };
+        });
+    
         setErrorMessages((oldErrorMessages) => {
-            return { ...oldErrorMessages, [name]: validMessage }
-        })
-
+          return { ...oldErrorMessages, [name]: validMessage };
+        });
+    
         setIsValidInput((oldIsValidInput) => {
-            return { ...oldIsValidInput, [name]: valid }
-        })
+          return { ...oldIsValidInput, [name]: valid };
+        });
 
-        setIsValid(forms.checkValidity())
+        setIsValid(form.checkValidity())
     }
     
-    return { handleChange }
+      return { listValue, errorMessages, isValidInput, isValid, handleChange };
 }
