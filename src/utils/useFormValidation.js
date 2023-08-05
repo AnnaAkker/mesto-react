@@ -9,16 +9,17 @@ export default function useFormValidation() {
   function handleChange(evt) {
     const name = evt.target.name
     const value = evt.target.value
-    const validMessage = evt.target.validationMessage
+    const validationMessage = evt.target.validationMessage
     const valid = evt.target.validity.valid
     const form = evt.target.form
+    console.log(validationMessage)
 
     setListValue((oldListValue) => {
       return { ...oldListValue, [name]: value };
     });
 
     setErrorMessages((oldErrorMessages) => {
-      return { ...oldErrorMessages, [name]: validMessage };
+      return { ...oldErrorMessages, [name]: validationMessage };
     });
 
     setIsValidInput((oldIsValidInput) => {

@@ -34,4 +34,5 @@ export default function ButtonLikes({ likes, myid, cardid }) {
             <span className="elements__counter">{isCount}</span>
         </>
     )
+
 }

@@ -25,6 +25,7 @@ function App() {
 
   const[isDeleteCards, setDeleteCards] = useState('')
 
+
   const setStateClosePopup = useCallback(() =>{
     setIsEditProfilePopupOpen(false)
     setIsEditAvatarPopupOpen(false)
@@ -43,7 +44,7 @@ function App() {
   const closeAllPopups = useCallback(() => {
     setStateClosePopup()
     document.removeEventListener('keydown', closePopupByEsc)
-  },[setStateClosePopup])
+  },[setStateClosePopup, closePopupByEsc])
 
   function setEvantListenerForKeydown() {
     document.addEventListener('keydown', closePopupByEsc)
@@ -85,16 +86,26 @@ function App() {
   },[])
 
   function handleCardDelete(evt) {
-    evt.preventDefault()
+    evt.preventDefault();
     api.deleteCard(isDeleteCards)
       .then(() => {
-        setCards(cards.filter(element => {
-          return element._id !== isDeleteCards
-        }))
-        closeAllPopups()
+        setCards(cards.filter((element) => {
+          return element._id !== isDeleteCards;
+        }));
+        closeAllPopups();
       })
-      .catch ((err) => console.error(`Ошибка удаления карточки ${err}`))
+      .catch((err) => console.error(`Ошибка удаления карточки ${err}`));
   }
+
+  function handleUpDateUser(dataUser, reset) {
+    api.setUserInfo(dataUser)
+      .then(res => {
+        setCurrentUsers(res);
+        closeAllPopups();
+        reset();
+      })
+      .catch(err => console.error(`Ошибка редактирования профиля ${err}`));
+}
 
   return (
     <CurrentUserContext.Provider value={currentUsers}>
@@ -114,6 +125,7 @@ function App() {
         <Footer/>
 
         <EditProfilePopup
+          onUpDateUser = {handleUpDateUser}
           isOpen ={isEditProfilePopupOpen}
           onClose = {closeAllPopups}
         />

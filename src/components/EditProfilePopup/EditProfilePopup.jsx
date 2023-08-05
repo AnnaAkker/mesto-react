@@ -3,7 +3,7 @@ import useFormValidation from "../../utils/useFormValidation.js";
 import PopupWithForm from "../PopupWithForm/PopupWithForm.jsx";
 import CurrentUserContext from "../contexts/CurrentUserContext.js"
 
-export default function EditProfilePopup({ isOpen, onClose }) {
+export default function EditProfilePopup({ isOpen, onClose, onUpDateUser }) {
 
     const currentUser = useContext(CurrentUserContext);
     const { listValue, errorMessages, isValidInput, isValid, handleChange, reset, setListValues } = useFormValidation()
@@ -18,6 +18,12 @@ export default function EditProfilePopup({ isOpen, onClose }) {
       reset({ username: currentUser.name, subtitle: currentUser.about})
     }
 
+    function handleSubmit(evt) {
+      evt.preventDefault()
+      onUpDateUser({ username: listValue.username, subtitle: listValue.subtitle }, reset)
+
+    }
+
     return (
       <PopupWithForm
         name='edite-profile'
@@ -25,6 +31,7 @@ export default function EditProfilePopup({ isOpen, onClose }) {
         isOpen ={isOpen}
         onClose = {resetAfterClose}
         isValid={isValid}
+        onSubmit={handleSubmit}
       >
         <input
           id="username-input"
