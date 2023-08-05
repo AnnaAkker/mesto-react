@@ -21,7 +21,6 @@ export default function EditProfilePopup({ isOpen, onClose, onUpDateUser }) {
     function handleSubmit(evt) {
       evt.preventDefault()
       onUpDateUser({ username: listValue.username, subtitle: listValue.subtitle }, reset)
-
     }
 
     return (
