@@ -39,5 +39,4 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
         <span id="image-input-error" className="popup__input-error">{errorMessages.image}</span>
       </PopupWithForm>
     )
-    console.log(input)
 }
