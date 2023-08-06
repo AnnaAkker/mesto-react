@@ -18,7 +18,7 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
 
     return(
       <PopupWithForm
-        name='edite-avatar'
+        name='edit-avatar'
         title='Обновить аватар'
         isOpen={isOpen}
         isValid={isValid}
