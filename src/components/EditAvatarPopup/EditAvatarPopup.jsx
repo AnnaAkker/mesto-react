@@ -13,7 +13,7 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
 
     function handleSubmit(evt) {
       evt.preventDefault()
-      onUpdateAvatar({avatar: input.current.value}, reset)
+      onUpdateAvatar({image: input.current.value}, reset)
     }
 
     return(
@@ -29,7 +29,7 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
           ref={input}
           id="image-input"
           type="url"
-          className={`popup__input popup__input_type_link ${isValidInput.image === undefined || isValidInput.image ? '' : 'popup__input_invalid'}`}
+          className={`popup__input popup__input_type_url ${isValidInput.image === undefined || isValidInput.image ? '' : 'popup__input_invalid'}`}
           name="image"
           placeholder="Ссылка на картинку"
           required=""
@@ -39,4 +39,5 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
         <span id="image-input-error" className="popup__input-error">{errorMessages.image}</span>
       </PopupWithForm>
     )
+    console.log(input)
 }
