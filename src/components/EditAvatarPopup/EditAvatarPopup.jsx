@@ -16,7 +16,7 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
       onUpdateAvatar({image: input.current.value}, reset)
     }
 
-    return(
+    return (
       <PopupWithForm
         name='edit-avatar'
         title='Обновить аватар'
@@ -25,14 +25,7 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
         onClose = {resetAfterClose}
         onSubmit={handleSubmit}
       >
-        <input
-          ref={input}
-          id="image-input"
-          type="url"
-          className={`popup__input popup__input_type_url ${isValidInput.image === undefined || isValidInput.image ? '' : 'popup__input_invalid'}`}
-          name="image"
-          placeholder="Ссылка на картинку"
-          required=""
+        <input ref={input} id="image-input" type="url" className={`popup__input popup__input_type_url ${isValidInput.image === undefined || isValidInput.image ? '' : 'popup__input_invalid'}`} name="image" placeholder="Ссылка на картинку" required=""
           value={listValue.image ? listValue.image : ''}
           onChange={handleChange}
         />

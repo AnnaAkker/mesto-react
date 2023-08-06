@@ -12,7 +12,6 @@ export default function useFormValidation() {
     const validationMessage = evt.target.validationMessage
     const valid = evt.target.validity.valid
     const form = evt.target.form
-    console.log(validationMessage)
 
     setListValue((oldListValue) => {
       return { ...oldListValue, [name]: value };
@@ -29,7 +28,7 @@ export default function useFormValidation() {
     setIsValid(form.checkValidity())
   }
 
-  function reset(data={}) {
+  function reset(data = {}) {
     setListValue(data)
     setErrorMessages({})
     setIsValid(false)
